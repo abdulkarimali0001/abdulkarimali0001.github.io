@@ -53,32 +53,32 @@ const PORTFOLIO = {
   // ── SKILLS ────────────────────────────────────────────────
   skillGroups: [
     {
-      icon: "🧠", title: "Machine Learning", color: "c1",
+      title: "Machine Learning", color: "c1",
       desc: "Classical ML algorithms, model selection, hyperparameter tuning and evaluation for production systems.",
       tags: ["Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "Feature Engineering", "Cross-Validation"]
     },
     {
-      icon: "🔥", title: "Deep Learning & AI", color: "c2",
+      title: "Deep Learning & AI", color: "c2",
       desc: "Neural network architectures, training pipelines, and fine-tuning large foundation models.",
       tags: ["PyTorch", "TensorFlow", "Keras", "Transformers", "CNNs", "RNNs / LSTMs"]
     },
     {
-      icon: "💬", title: "NLP & LLMs", color: "c3",
+      title: "NLP & LLMs", color: "c3",
       desc: "Natural language processing, large language models, RAG pipelines and prompt engineering.",
       tags: ["HuggingFace", "LangChain", "RAG", "Embeddings", "Fine-tuning", "FAISS / Chroma"]
     },
     {
-      icon: "📊", title: "Data Engineering", color: "c4",
+      title: "Data Engineering", color: "c4",
       desc: "Building robust data pipelines, ETL workflows and scalable data infrastructure.",
       tags: ["Python", "SQL", "Pandas", "PySpark", "Airflow", "dbt"]
     },
     {
-      icon: "☁️", title: "MLOps & Cloud", color: "c5",
+      title: "MLOps & Cloud", color: "c5",
       desc: "Deploying and monitoring ML models in production with reproducible, scalable infrastructure.",
       tags: ["AWS / GCP", "Docker", "MLflow", "FastAPI", "CI/CD", "Kubernetes"]
     },
     {
-      icon: "📈", title: "Analytics & Visualization", color: "c6",
+      title: "Analytics & Visualization", color: "c6",
       desc: "Communicating data insights through compelling visualizations and interactive dashboards.",
       tags: ["Tableau", "Power BI", "Plotly", "Matplotlib", "Seaborn", "Streamlit"]
     },
