@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en" data-lang="en" translate="no" class="notranslate">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Khamis Abdulkarim Ali</title>
 <meta name="description" content="Khamis Abdulkarim Ali, Smart Computing student at Kyungdong University. Projects in machine learning for semiconductor manufacturing and LLM evaluation.">
@@ -213,7 +214,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 <script>
 (function () {
   var root = document.documentElement, lang = "en";
-  try { lang = localStorage.getItem("lang") || ((navigator.language || "").toLowerCase().indexOf("ko") === 0 ? "ko" : "en"); } catch (e) {}
+  try { var q = (location.search.match(/[?&]lang=(en|ko)/) || [])[1]; lang = q || localStorage.getItem("lang") || ((navigator.language || "").toLowerCase().indexOf("ko") === 0 ? "ko" : "en"); } catch (e) {}
   function set(l) {
     root.setAttribute("data-lang", l); root.lang = l;
     document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === l)); });
