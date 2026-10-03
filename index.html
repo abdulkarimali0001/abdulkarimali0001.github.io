@@ -3,416 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Khamis Abdulkarim Ali — AI for Semiconductor Manufacturing</title>
-<meta name="description" content="Portfolio of Khamis Abdulkarim Ali: AI and data projects for semiconductor manufacturing, model optimization, and Korean LLM evaluation.">
-<meta property="og:title" content="Khamis Abdulkarim Ali — Portfolio">
-<meta property="og:description" content="Wafer defect detection, yield and process-drift analysis, on-device model optimization, and Korean LLM evaluation.">
+<title>Khamis Abdulkarim Ali</title>
+<meta name="description" content="Khamis Abdulkarim Ali, Smart Computing student at Kyungdong University. Projects in machine learning for semiconductor manufacturing and LLM evaluation.">
+<meta property="og:title" content="Khamis Abdulkarim Ali">
+<meta property="og:description" content="Machine learning for semiconductor manufacturing, model optimization, and LLM evaluation.">
 <meta property="og:image" content="assets/headshot.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;600&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* Layout: one column, a lab-notebook feel. Hero pairs the intro with a real test wafer drawn die by die. */
 :root {
-  --bg: #F3F4F6; --surface: #FFFFFF; --ink: #14213D; --muted: #55607A; --line: #DDE1E8;
-  --copper: #A85A22; --copper-soft: #F4E6DA; --pass: #B9C3D3; --fail: #C2362B; --void: transparent;
-  --display: "Archivo", "Noto Sans KR", system-ui, sans-serif;
-  --body: "Noto Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --bg: #ffffff; --text: #1f2328; --muted: #5f6670; --line: #e6e8eb; --link: #2b5c8a; --soft: #f6f7f8;
+  --serif: "Source Serif 4", "Noto Sans KR", Georgia, serif;
+  --sans: "Source Sans 3", "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0D1220; --surface: #151C2E; --ink: #E7EBF3; --muted: #9AA5BC; --line: #26304A;
-  --copper: #E08D52; --copper-soft: #2E2219; --pass: #36425E; --fail: #EF5B4C; color-scheme: dark; } }
-:root[data-theme="dark"] {
-  --bg: #0D1220; --surface: #151C2E; --ink: #E7EBF3; --muted: #9AA5BC; --line: #26304A;
-  --copper: #E08D52; --copper-soft: #2E2219; --pass: #36425E; --fail: #EF5B4C; color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #16181b; --text: #e7e9ec; --muted: #a0a7b0; --line: #2c3036; --link: #8fb8e0; --soft: #1e2125; color-scheme: dark; } }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--body); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 18px/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
 html[data-lang="en"] [lang="ko"], html[data-lang="ko"] [lang="en"] { display: none !important; }
-a { color: var(--copper); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+html[data-lang="ko"] body { font-size: 17px; word-break: keep-all; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 2px; }
+.page { max-width: 760px; margin: 0 auto; padding: 56px 24px 72px; }
 
-/* top bar */
-header.bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.bar .wrap { display: flex; align-items: center; gap: 20px; height: 58px; }
-.brand { font: 700 15px var(--mono); letter-spacing: .02em; color: var(--ink); text-decoration: none; margin-right: auto; }
-nav.links { display: flex; gap: 18px; font-size: 14px; }
-nav.links a { color: var(--muted); text-decoration: none; }
-nav.links a:hover { color: var(--ink); }
-.toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
-.toggle button { font: 600 12px var(--mono); border: 0; background: none; color: var(--muted); padding: 6px 11px; cursor: pointer; }
-.toggle button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-@media (max-width: 760px) { nav.links { display: none; } }
+.lang { display: flex; justify-content: flex-end; gap: 6px; font-size: 14px; color: var(--muted); margin-bottom: 36px; }
+.lang button { background: none; border: 0; padding: 0; font: inherit; color: var(--muted); cursor: pointer; }
+.lang button[aria-pressed="true"] { color: var(--text); font-weight: 600; }
 
-/* hero */
-.hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; padding-block: 64px 56px; }
-.hero > * { min-width: 0; }
-.eyebrow { font: 600 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--copper); }
-h1 { font: 800 clamp(38px, 6vw, 64px)/1.02 var(--display); font-stretch: 85%; letter-spacing: -.01em; margin: 14px 0 6px; text-wrap: balance; }
-.ko-name { font: 500 18px var(--body); color: var(--muted); margin: 0 0 22px; }
-.lede { font-size: 18px; max-width: 34em; margin: 0 0 26px; }
-.facts { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--muted); margin-bottom: 28px; padding: 0; list-style: none; }
-.facts li::before { content: "▪"; color: var(--copper); margin-right: 7px; }
-.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid var(--ink); color: var(--ink); }
-.btn.primary { background: var(--ink); color: var(--bg); }
-.btn:hover { transform: translateY(-1px); }
-.waferbox { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-.waferbox canvas { width: 100%; max-width: 100%; aspect-ratio: 1; display: block; }
-.wafer-cap { font: 12px/1.5 var(--mono); color: var(--muted); margin-top: 12px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.key { display: inline-flex; align-items: center; gap: 6px; }
-.key i { width: 10px; height: 10px; display: inline-block; border-radius: 2px; }
-.portrait { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
-.portrait img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; border: 2px solid var(--line); }
-@media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 40px; } .waferbox { max-width: 420px; } }
+.intro { display: grid; grid-template-columns: 148px 1fr; gap: 32px; align-items: start; }
+.intro img { width: 148px; height: 148px; border-radius: 12px; object-fit: cover; object-position: 50% 28%; }
+h1 { font: 600 34px/1.2 var(--serif); margin: 4px 0 4px; letter-spacing: -0.005em; }
+.subtitle { color: var(--muted); margin: 0 0 18px; font-size: 17px; }
+.intro p { margin: 0 0 14px; }
+.contact { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 16px; margin-top: 18px; }
+@media (max-width: 600px) {
+  .page { padding-top: 32px; }
+  .intro { grid-template-columns: 1fr; gap: 20px; }
+  .intro img { width: 112px; height: 112px; }
+  h1 { font-size: 30px; }
+}
 
-/* stats strip */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
-.stat { padding: 22px 16px; border-left: 1px solid var(--line); }
-.stat:first-child { border-left: 0; }
-.stat b { display: block; font: 700 30px/1.1 var(--display); font-stretch: 90%; font-variant-numeric: tabular-nums; }
-.stat span { font-size: 13px; color: var(--muted); }
-@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } .stat:nth-child(3) { border-left: 0; } .stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+h2 { font: 600 22px/1.3 var(--serif); margin: 64px 0 22px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 
-/* sections */
-section.block { padding-block: 64px 8px; }
-.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
-.sec-head .num { font: 600 13px var(--mono); color: var(--copper); }
-h2 { font: 800 30px/1.15 var(--display); font-stretch: 90%; margin: 0; }
-.sec-sub { color: var(--muted); margin: -14px 0 28px; max-width: 46em; }
+.project { display: grid; grid-template-columns: 1fr 200px; gap: 28px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.project:last-child { border-bottom: 0; }
+.project > div { min-width: 0; }
+.project h3 { font: 600 19px/1.4 var(--sans); margin: 0 0 6px; }
+.project p { margin: 0 0 8px; font-size: 17px; }
+.project .result { color: var(--muted); font-size: 15.5px; }
+.project .links { font-size: 15.5px; }
+.project .thumb { display: block; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; aspect-ratio: 4 / 3; }
+.project .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 600px) { .project { grid-template-columns: 1fr; gap: 14px; } .project .thumb { max-width: 320px; } }
 
-/* projects */
-.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-.proj.wide { grid-column: span 2; display: grid; grid-template-columns: 1.1fr 1fr; }
-.proj figure { margin: 0; background: #fff; border-bottom: 1px solid var(--line); aspect-ratio: 16 / 8; overflow: hidden; }
-.proj.wide figure { border-bottom: 0; border-right: 1px solid var(--line); aspect-ratio: auto; }
-.proj figure img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.proj .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-.proj h3 { font: 700 20px/1.25 var(--display); font-stretch: 95%; margin: 0; }
-.proj .area { font: 600 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.metric { display: flex; flex-wrap: wrap; gap: 8px; }
-.metric span { font: 600 13px var(--mono); background: var(--copper-soft); color: var(--copper); padding: 4px 9px; border-radius: 6px; font-variant-numeric: tabular-nums; }
-.proj p { margin: 0; font-size: 15px; }
-.proj ul.find { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-.tags span { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; }
-.proj .go { font-weight: 600; font-size: 14px; }
-.codecard { background: var(--ink); color: var(--bg); font: 12.5px/1.6 var(--mono); padding: 18px 20px; aspect-ratio: 16 / 8; overflow: hidden; white-space: pre; border-bottom: 1px solid var(--line); }
-.codecard .k { color: #F2B37E; }
-.pending { border-style: dashed; }
-@media (max-width: 860px) { .projects { grid-template-columns: 1fr; } .proj.wide { grid-column: auto; display: flex; } .proj.wide figure { border-right: 0; border-bottom: 1px solid var(--line); aspect-ratio: 16/8; } }
+.rows { display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 130px 1fr; gap: 20px; }
+.row .when { color: var(--muted); font-size: 16px; font-variant-numeric: tabular-nums; }
+.row b { font-weight: 600; }
+.row p { margin: 0; }
+@media (max-width: 600px) { .row { grid-template-columns: 1fr; gap: 2px; } }
 
-/* skills / cv */
-.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.grid2 > * { min-width: 0; }
-@media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
-.panel h3 { font: 700 16px var(--display); margin: 0 0 12px; }
-.skill-row { display: grid; grid-template-columns: 9.5em 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
-.skill-row:first-of-type { border-top: 0; }
-.skill-row b { font-weight: 600; }
-.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-.timeline li { display: grid; grid-template-columns: 8.5em 1fr; gap: 12px; font-size: 15px; }
-.timeline .when { font: 13px var(--mono); color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
-.lang-bars { display: grid; gap: 12px; }
-.lang-bars div { display: grid; grid-template-columns: 7em 1fr 6.5em; gap: 10px; align-items: center; font-size: 14.5px; }
-.lang-bars .track { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
-.lang-bars .fill { height: 100%; background: var(--copper); }
-.lang-bars small { color: var(--muted); font-size: 13px; text-align: right; }
+.skills { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 10px 20px; font-size: 17px; }
+.skills dt { color: var(--muted); }
+.skills dd { margin: 0; }
+@media (max-width: 600px) { .skills { grid-template-columns: 1fr; gap: 0; } .skills dd { margin-bottom: 12px; } }
 
-/* contact */
-.contact { margin-block: 64px 40px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 36px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; }
-.contact h2 { color: var(--bg); }
-.contact p { margin: 10px 0 0; opacity: .8; }
-.contact .btn { border-color: var(--bg); color: var(--bg); }
-.contact .btn.primary { background: var(--bg); color: var(--ink); }
-.contact .ctas { justify-content: flex-end; }
-@media (max-width: 760px) { .contact { grid-template-columns: 1fr; padding: 26px; } .contact .ctas { justify-content: flex-start; } }
-footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn:hover { transform: none; } }
+.cv { background: var(--soft); border-radius: 10px; padding: 20px 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.cv p { margin: 0; }
+.cv .dl { display: flex; gap: 18px; font-weight: 600; }
+
+footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
 </style>
 </head>
 <body>
+<div class="page">
 
-<header class="bar">
-  <div class="wrap">
-    <a class="brand" href="#top">KHAMIS A. ALI</a>
-    <nav class="links">
-      <a href="#projects"><span lang="en">Projects</span><span lang="ko">프로젝트</span></a>
-      <a href="#skills"><span lang="en">Skills</span><span lang="ko">기술</span></a>
-      <a href="#cv"><span lang="en">CV</span><span lang="ko">이력</span></a>
-      <a href="#contact"><span lang="en">Contact</span><span lang="ko">연락처</span></a>
-    </nav>
-    <div class="toggle" role="group" aria-label="Language">
-      <button type="button" data-set="en" aria-pressed="true">EN</button>
-      <button type="button" data-set="ko" aria-pressed="false">한국어</button>
-    </div>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-set="en" aria-pressed="true">English</button><span>·</span><button type="button" data-set="ko" aria-pressed="false">한국어</button>
   </div>
-</header>
 
-<main id="top">
-  <div class="wrap">
-    <section class="hero">
-      <div>
-        <div class="portrait">
-          <img src="assets/headshot.jpg" alt="Khamis Abdulkarim Ali" width="64" height="64">
-          <div class="eyebrow"><span lang="en">AI · Data · Semiconductor manufacturing</span><span lang="ko">AI · 데이터 · 반도체 제조</span></div>
-        </div>
-        <h1>Khamis Abdulkarim Ali</h1>
-        <p class="ko-name">카미스 압둘카림 알리</p>
-        <p class="lede">
-          <span lang="en">I build machine-learning systems for chip manufacturing data — wafer defect detection, yield and process-drift analysis — and I make them small and fast enough to deploy. I also study how LLMs hallucinate, in Korean and in legal text.</span>
-          <span lang="ko">반도체 제조 데이터를 위한 머신러닝 시스템(웨이퍼 불량 검출, 수율·공정 드리프트 분석)을 만들고, 실제로 배포할 수 있도록 작고 빠르게 최적화합니다. 한국어와 법률 분야에서 LLM이 어떻게 환각을 일으키는지도 연구합니다.</span>
-        </p>
-        <ul class="facts">
-          <li><span lang="en">Smart Computing, Kyungdong University · B.S. Aug 2027</span><span lang="ko">경동대학교 스마트컴퓨팅학과 · 2027년 8월 졸업예정</span></li>
-          <li><span lang="en">Sokcho, South Korea</span><span lang="ko">강원도 속초</span></li>
-          <li><span lang="en">Swahili · English · Korean · Arabic</span><span lang="ko">스와힐리어 · 영어 · 한국어 · 아랍어</span></li>
-        </ul>
-        <div class="ctas">
-          <a class="btn primary" href="#projects"><span lang="en">See projects</span><span lang="ko">프로젝트 보기</span></a>
-          <a class="btn" href="assets/CV_Khamis_Abdulkarim_Ali_EN.pdf" lang="en" download>Download CV</a>
-          <a class="btn" href="assets/CV_Khamis_Abdulkarim_Ali_KO.pdf" lang="ko" download>이력서 다운로드</a>
-          <a class="btn" href="https://github.com/abdulkarimali0001" target="_blank" rel="noopener">GitHub</a>
-        </div>
+  <header class="intro">
+    <img src="assets/headshot.jpg" alt="Photo of Khamis Abdulkarim Ali" width="148" height="148">
+    <div>
+      <h1><span lang="en">Khamis Abdulkarim Ali</span><span lang="ko">카미스 압둘카림 알리</span></h1>
+      <p class="subtitle"><span lang="en">Smart Computing student at Kyungdong University, South Korea</span><span lang="ko">경동대학교 스마트컴퓨팅학과 재학 (2027년 8월 졸업예정)</span></p>
+      <p><span lang="en">Hi, I'm Khamis. I'm interested in how machine learning can help semiconductor manufacturing: finding defect patterns on wafers, understanding why yield changes, and making models small enough to run where the data is.</span><span lang="ko">안녕하세요, 카미스입니다. 머신러닝으로 반도체 제조를 돕는 일에 관심이 많습니다. 웨이퍼의 불량 패턴을 찾고, 수율이 변하는 이유를 분석하고, 모델을 현장에서 돌아갈 만큼 가볍게 만드는 일입니다.</span></p>
+      <p><span lang="en">I also work on evaluating large language models, especially how they handle Korean and legal questions. My thesis is on detecting false legal claims made by LLMs.</span><span lang="ko">대규모 언어 모델(LLM) 평가, 특히 한국어와 법률 질문에서의 성능에도 관심이 있으며, 졸업논문으로 LLM이 만든 잘못된 법률 주장을 탐지하는 연구를 하고 있습니다.</span></p>
+      <p><span lang="en">I grew up in Kenya and now live in Sokcho. I speak Swahili, English and Korean.</span><span lang="ko">케냐에서 자랐고 지금은 속초에 살고 있습니다. 스와힐리어, 영어, 한국어를 사용합니다.</span></p>
+      <div class="contact">
+        <a href="mailto:abdulkarimali0001@gmail.com">abdulkarimali0001@gmail.com</a>
+        <a href="https://github.com/abdulkarimali0001" target="_blank" rel="noopener">GitHub</a>
+        <a href="assets/CV_Khamis_Abdulkarim_Ali_EN.pdf" lang="en">CV (PDF)</a>
+        <a href="assets/CV_Khamis_Abdulkarim_Ali_KO.pdf" lang="ko">이력서 (PDF)</a>
       </div>
-      <figure class="waferbox" aria-label="Wafer map from a real fab: each square is one die">
-        <canvas id="wafer" width="520" height="520"></canvas>
-        <figcaption class="wafer-cap">
-          <span><span lang="en">MixedWM38 test wafer · 52×52 dies</span><span lang="ko">MixedWM38 테스트 웨이퍼 · 52×52 다이</span></span>
-          <span class="key"><i style="background:var(--pass)"></i><span lang="en">pass</span><span lang="ko">양품</span> <i style="background:var(--fail)"></i><span lang="en">fail</span><span lang="ko">불량</span></span>
-          <span id="wafer-pred"><span lang="en">My model: Donut + Edge-Ring + Scratch ✓</span><span lang="ko">내 모델 판정: Donut + Edge-Ring + Scratch ✓</span></span>
-        </figcaption>
-      </figure>
-    </section>
+    </div>
+  </header>
 
-    <div class="stats">
-      <div class="stat"><b>0.991</b><span><span lang="en">macro-F1, wafer defect classifier</span><span lang="ko">웨이퍼 불량 분류 Macro-F1</span></span></div>
-      <div class="stat"><b>14.6×</b><span><span lang="en">smaller model after INT8 + distillation</span><span lang="ko">INT8·지식 증류 후 모델 축소</span></span></div>
-      <div class="stat"><b>74–78 GB/s</b><span><span lang="en">measured LLM memory bandwidth</span><span lang="ko">측정한 LLM 실효 메모리 대역폭</span></span></div>
-      <div class="stat"><b>7</b><span><span lang="en">open-source projects on GitHub</span><span lang="ko">GitHub 공개 프로젝트</span></span></div>
+  <main>
+    <h2><span lang="en">Projects</span><span lang="ko">프로젝트</span></h2>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">Wafer map defect classification</span><span lang="ko">웨이퍼 맵 불량 패턴 분류</span></h3>
+        <p><span lang="en">A neural network that recognizes defect patterns on wafer maps from a real fab. One wafer can have several patterns at once, such as a scratch on top of an edge ring.</span><span lang="ko">실제 팹의 웨이퍼 맵에서 불량 패턴을 인식하는 신경망입니다. 한 웨이퍼에 스크래치와 에지 링처럼 여러 패턴이 함께 나타날 수 있습니다.</span></p>
+        <p class="result"><span lang="en">0.991 F1 on 5,701 test wafers. PyTorch, Grad-CAM.</span><span lang="ko">테스트 웨이퍼 5,701장에서 F1 0.991. PyTorch, Grad-CAM.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/wafer-defect-classifier" target="_blank" rel="noopener"><span lang="en">Code and write-up</span><span lang="ko">코드와 설명</span></a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/wafer-defect-classifier" target="_blank" rel="noopener"><img src="assets/img/gradcam.png" alt="Wafer maps with heatmaps showing where the model looks" loading="lazy"></a>
+    </article>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">Yield prediction and process drift</span><span lang="ko">수율 예측과 공정 변화 분석</span></h3>
+        <p><span lang="en">Predicting which production lots fail final test from 590 sensor readings. The more interesting finding was that the process itself changed over time, which made a model trained on older lots unreliable on newer ones.</span><span lang="ko">590개 센서 값으로 최종 테스트에서 불량이 날 생산 로트를 예측했습니다. 더 중요한 발견은 시간이 지나며 공정 자체가 변해, 과거 데이터로 학습한 모델이 최근 로트에서는 잘 맞지 않는다는 점이었습니다.</span></p>
+        <p class="result"><span lang="en">XGBoost, SHAP, time-based evaluation.</span><span lang="ko">XGBoost, SHAP, 시간 순 평가.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/secom-yield-prediction" target="_blank" rel="noopener"><span lang="en">Code and write-up</span><span lang="ko">코드와 설명</span></a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/secom-yield-prediction" target="_blank" rel="noopener"><img src="assets/img/shap_summary.png" alt="Chart of the sensors that most affect failure risk" loading="lazy"></a>
+    </article>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">Making the wafer model smaller and faster</span><span lang="ko">웨이퍼 모델 경량화</span></h3>
+        <p><span lang="en">Quantization and knowledge distillation brought the model from 4.7 MB to 0.3 MB and made it about 12 times faster, with almost the same accuracy. I also wrapped it in a small web API with tests and Docker.</span><span lang="ko">양자화와 지식 증류로 모델을 4.7MB에서 0.3MB로 줄이고 약 12배 빠르게 만들었으며, 정확도는 거의 그대로 유지했습니다. 테스트와 Docker를 갖춘 웹 API로도 배포했습니다.</span></p>
+        <p class="result"><span lang="en">ONNX Runtime, INT8, FastAPI, Docker.</span><span lang="ko">ONNX Runtime, INT8, FastAPI, Docker.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/wafer-model-optimization" target="_blank" rel="noopener"><span lang="en">Optimization</span><span lang="ko">경량화</span></a> · <a href="https://github.com/abdulkarimali0001/wafer-defect-api" target="_blank" rel="noopener">API</a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/wafer-model-optimization" target="_blank" rel="noopener"><img src="assets/img/tradeoff.png" alt="Accuracy compared with model size and speed" loading="lazy"></a>
+    </article>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">How memory limits LLM speed</span><span lang="ko">메모리가 LLM 속도를 제한하는 방식</span></h3>
+        <p><span lang="en">I measured a language model on my laptop at different precisions and context lengths. Generation speed followed model size almost exactly, which shows the bottleneck is memory bandwidth rather than compute.</span><span lang="ko">노트북에서 정밀도와 컨텍스트 길이를 바꿔 가며 언어 모델을 측정했습니다. 생성 속도가 모델 크기에 거의 정확히 비례했고, 병목이 연산이 아니라 메모리 대역폭이라는 것을 보여 줍니다.</span></p>
+        <p class="result"><span lang="en">Ollama, Python.</span><span lang="ko">Ollama, Python.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/llm-inference-benchmark" target="_blank" rel="noopener"><span lang="en">Code and write-up</span><span lang="ko">코드와 설명</span></a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/llm-inference-benchmark" target="_blank" rel="noopener"><img src="assets/img/quantization.png" alt="Memory use, speed and bandwidth for three model precisions" loading="lazy"></a>
+    </article>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">Korean–English question answering over semiconductor documents</span><span lang="ko">한·영 반도체 문서 질의응답</span></h3>
+        <p><span lang="en">A small assistant that answers questions in Korean or English and cites its sources. I built a hand-checked test set to measure it honestly; its main weakness turned out to be refusing too often, not making things up.</span><span lang="ko">한국어나 영어 질문에 출처를 인용해 답하는 시스템입니다. 직접 검수한 평가셋으로 측정해 보니, 주된 약점은 지어내는 것이 아니라 지나치게 답을 거부하는 것이었습니다.</span></p>
+        <p class="result"><span lang="en">Retrieval-augmented generation, multilingual embeddings.</span><span lang="ko">RAG, 다국어 임베딩.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/semiconductor-rag" target="_blank" rel="noopener"><span lang="en">Code and write-up</span><span lang="ko">코드와 설명</span></a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/semiconductor-rag" target="_blank" rel="noopener"><img src="assets/img/eval_summary.png" alt="Retrieval and answer accuracy" loading="lazy"></a>
+    </article>
+
+    <article class="project">
+      <div>
+        <h3><span lang="en">Do language models make things up in Korean?</span><span lang="ko">언어 모델은 한국어로 얼마나 지어낼까?</span></h3>
+        <p><span lang="en">I wrote 70 Korean questions, some with false premises like a law article that doesn't exist, and tested four small models. Most of them invented answers to the false questions; one extra sentence in the instructions helped noticeably.</span><span lang="ko">존재하지 않는 법 조항처럼 거짓 전제가 담긴 질문을 포함해 한국어 70문항을 직접 만들고 네 개의 소형 모델을 시험했습니다. 대부분의 모델이 거짓 질문에 답을 지어냈고, 지시문 한 문장을 추가하자 눈에 띄게 줄었습니다.</span></p>
+        <p class="result"><span lang="en">LLM evaluation, Korean NLP.</span><span lang="ko">LLM 평가, 한국어 자연어 처리.</span></p>
+        <div class="links"><a href="https://github.com/abdulkarimali0001/korean-hallucination-benchmark" target="_blank" rel="noopener"><span lang="en">Code and write-up</span><span lang="ko">코드와 설명</span></a></div>
+      </div>
+      <a class="thumb" href="https://github.com/abdulkarimali0001/korean-hallucination-benchmark" target="_blank" rel="noopener"><img src="assets/img/leaderboard.png" alt="How often each model invented answers" loading="lazy"></a>
+    </article>
+
+    <h2><span lang="en">Education</span><span lang="ko">학력</span></h2>
+    <div class="rows">
+      <div class="row">
+        <div class="when"><span lang="en">until Aug 2027</span><span lang="ko">~ 2027.08</span></div>
+        <div><p><b><span lang="en">B.S. in Smart Computing</span><span lang="ko">스마트컴퓨팅학과 학사</span></b>, <span lang="en">Kyungdong University, Korea</span><span lang="ko">경동대학교</span></p>
+          <p style="color:var(--muted)"><span lang="en">GPA 3.8. Thesis: verifying legal claims made by LLMs.</span><span lang="ko">학점 3.8. 졸업논문: LLM이 생성한 법률 주장 검증.</span></p></div>
+      </div>
+      <div class="row">
+        <div class="when"><span lang="en">until Apr 2022</span><span lang="ko">~ 2022.04</span></div>
+        <div><p><b>Kanga High School</b>, <span lang="en">Kenya</span><span lang="ko">케냐</span></p>
+          <p style="color:var(--muted)"><span lang="en">KCSE certificate, grade B+</span><span lang="ko">KCSE 졸업자격, B+</span></p></div>
+      </div>
     </div>
 
-    <!-- PROJECTS -->
-    <section class="block" id="projects">
-      <div class="sec-head"><span class="num">01</span><h2><span lang="en">Projects</span><span lang="ko">프로젝트</span></h2></div>
-      <p class="sec-sub"><span lang="en">Real industrial and public data, honest evaluation, and a written explanation of what worked and what didn't. Every project has code, results and a README.</span><span lang="ko">실제 산업·공개 데이터, 정직한 평가, 무엇이 잘 되고 안 됐는지에 대한 분석을 담았습니다. 모든 프로젝트에 코드·결과·README가 있습니다.</span></p>
+    <h2><span lang="en">Skills</span><span lang="ko">기술</span></h2>
+    <dl class="skills">
+      <dt><span lang="en">Languages</span><span lang="ko">언어</span></dt>
+      <dd><span lang="en">Swahili (native), English (fluent), Korean (intermediate), Arabic (beginner)</span><span lang="ko">스와힐리어(모국어), 영어(유창), 한국어(중급), 아랍어(초급)</span></dd>
+      <dt><span lang="en">Programming</span><span lang="ko">프로그래밍</span></dt>
+      <dd>Python, SQL, C#</dd>
+      <dt><span lang="en">Machine learning</span><span lang="ko">머신러닝</span></dt>
+      <dd>PyTorch, scikit-learn, XGBoost, pandas, NumPy</dd>
+      <dt><span lang="en">LLMs</span><span lang="ko">LLM</span></dt>
+      <dd><span lang="en">RAG, evaluation, running local models with Ollama</span><span lang="ko">RAG, 모델 평가, Ollama 로컬 모델 운영</span></dd>
+      <dt><span lang="en">Deployment</span><span lang="ko">배포</span></dt>
+      <dd>ONNX Runtime, FastAPI, Docker, Git, GitHub Actions</dd>
+    </dl>
 
-      <div class="projects">
-        <article class="proj wide">
-          <figure><img src="assets/img/gradcam.png" alt="Wafer maps with Grad-CAM heatmaps" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">Semiconductor · Deep learning</span><span lang="ko">반도체 · 딥러닝</span></div>
-            <h3><span lang="en">Wafer Map Defect Classifier</span><span lang="ko">웨이퍼 맵 복합 불량 패턴 분류</span></h3>
-            <div class="metric"><span>macro-F1 0.991</span><span><span lang="en">98.5% exact match</span><span lang="ko">완전 일치 98.5%</span></span><span><span lang="en">38,015 wafers</span><span lang="ko">웨이퍼 38,015장</span></span></div>
-            <p><span lang="en">A multi-label CNN that recognizes 8 defect types and 38 mixed patterns on real-fab wafer maps — the patterns yield engineers use to trace process problems.</span><span lang="ko">실제 팹 웨이퍼 맵에서 8종 불량과 38개 복합 패턴을 인식하는 다중 레이블 CNN입니다. 수율 엔지니어가 공정 문제를 추적할 때 쓰는 패턴입니다.</span></p>
-            <ul class="find">
-              <li><span lang="en">Grad-CAM confirms the model looks at the failed dies that define each pattern.</span><span lang="ko">Grad-CAM으로 모델이 각 패턴을 이루는 불량 다이를 보고 판단함을 확인했습니다.</span></li>
-              <li><span lang="en">Found undocumented values in the dataset and handled them explicitly.</span><span lang="ko">데이터셋의 문서화되지 않은 값을 발견해 처리했습니다.</span></li>
-            </ul>
-            <div class="tags"><span>PyTorch</span><span>CNN</span><span>Grad-CAM</span><span>multi-label</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/wafer-defect-classifier" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <figure><img src="assets/img/shap_summary.png" alt="SHAP summary of the top sensors" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">Semiconductor · Yield</span><span lang="ko">반도체 · 수율</span></div>
-            <h3><span lang="en">Yield Prediction &amp; Process Drift</span><span lang="ko">공정 센서 수율 예측 및 드리프트 분석</span></h3>
-            <div class="metric"><span><span lang="en">drift AUC 0.994</span><span lang="ko">드리프트 AUC 0.994</span></span><span><span lang="en">590 sensors</span><span lang="ko">센서 590개</span></span></div>
-            <p><span lang="en">Predicting final-test failures from fab sensor data. Time-based evaluation showed a random split overstates performance 2–3×, and adversarial validation proved the process had drifted.</span><span lang="ko">공정 센서 데이터로 최종 테스트 불량을 예측했습니다. 시간 순 평가로 무작위 분할이 성능을 2~3배 과대평가함을 보였고, 공정 드리프트를 증명했습니다.</span></p>
-            <div class="tags"><span>XGBoost</span><span>SHAP</span><span>scikit-learn</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/secom-yield-prediction" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <figure><img src="assets/img/tradeoff.png" alt="Accuracy versus size and latency" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">On-device AI</span><span lang="ko">온디바이스 AI</span></div>
-            <h3><span lang="en">Model Optimization: Quantization &amp; Distillation</span><span lang="ko">모델 경량화: 양자화·지식 증류</span></h3>
-            <div class="metric"><span><span lang="en">14.6× smaller</span><span lang="ko">14.6배 축소</span></span><span><span lang="en">12× faster</span><span lang="ko">12배 가속</span></span><span>−0.15 pt F1</span></div>
-            <p><span lang="en">ONNX export, INT8 static quantization and knowledge distillation shrink the wafer model to 0.32 MB with almost no accuracy loss — the techniques behind AI on phones and inspection tools.</span><span lang="ko">ONNX 변환, INT8 정적 양자화, 지식 증류로 웨이퍼 모델을 0.32MB까지 줄이면서 정확도를 거의 유지했습니다.</span></p>
-            <div class="tags"><span>ONNX Runtime</span><span>INT8</span><span>distillation</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/wafer-model-optimization" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <div class="codecard" aria-hidden="true"><span class="k">POST</span> /predict
-{ "wafer_map": [[0,1,1,2, …]] }
-
-<span class="k">200 OK</span>  · 9.9 ms
-{
-  "pattern": "Center",
-  "probabilities": {"Center": 1.0, …},
-  "failed_die_ratio": 0.2654
-}</div>
-          <div class="body">
-            <div class="area">MLOps</div>
-            <h3><span lang="en">Wafer Defect API</span><span lang="ko">웨이퍼 불량 분류 API</span></h3>
-            <div class="metric"><span>p50 9.9 ms</span><span><span lang="en">10 tests</span><span lang="ko">테스트 10개</span></span><span>Docker + CI</span></div>
-            <p><span lang="en">The classifier served as a production-style REST service with input validation, batch inference, automated tests and a GitHub Actions pipeline.</span><span lang="ko">분류 모델을 입력 검증, 배치 추론, 자동화 테스트, GitHub Actions 파이프라인을 갖춘 REST 서비스로 배포했습니다.</span></p>
-            <div class="tags"><span>FastAPI</span><span>Docker</span><span>pytest</span><span>GitHub Actions</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/wafer-defect-api" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <figure><img src="assets/img/quantization.png" alt="Memory, decode speed and bandwidth by quantization" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">LLM systems · Memory</span><span lang="ko">LLM 시스템 · 메모리</span></div>
-            <h3><span lang="en">LLM Inference &amp; Memory Bandwidth</span><span lang="ko">LLM 추론·메모리 대역폭 분석</span></h3>
-            <div class="metric"><span><span lang="en">3.0× faster (Q4)</span><span lang="ko">Q4로 3.0배 가속</span></span><span>74–78 GB/s</span></div>
-            <p><span lang="en">Measured a local LLM across FP16, Q8 and Q4 and context lengths up to 8K. Effective bandwidth stayed constant across formats — generation is limited by memory, which is why AI needs HBM.</span><span lang="ko">FP16·Q8·Q4와 최대 8K 컨텍스트에서 로컬 LLM을 측정했습니다. 실효 대역폭이 형식과 무관하게 일정해, 생성이 메모리에 의해 제한되며 AI에 HBM이 필요한 이유를 보여줍니다.</span></p>
-            <div class="tags"><span>Ollama</span><span>KV cache</span><span>benchmarking</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/llm-inference-benchmark" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <figure><img src="assets/img/eval_summary.png" alt="Retrieval and answer accuracy" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">Generative AI · RAG</span><span lang="ko">생성형 AI · RAG</span></div>
-            <h3><span lang="en">Korean–English Semiconductor RAG</span><span lang="ko">한·영 반도체 RAG 질의응답</span></h3>
-            <div class="metric"><span>63% → 72%</span><span><span lang="en">cross-lingual 47% → 76%</span><span lang="ko">언어 간 47% → 76%</span></span></div>
-            <p><span lang="en">A local assistant that answers semiconductor questions in Korean or English with cited sources, evaluated on a hand-reviewed test set. Main failure found: over-refusal, not hallucination.</span><span lang="ko">한국어·영어 반도체 질문에 출처를 인용해 답하는 로컬 시스템으로, 직접 검수한 평가셋으로 측정했습니다. 주요 실패 원인은 환각이 아니라 과도한 답변 거부였습니다.</span></p>
-            <div class="tags"><span>RAG</span><span>bge-m3</span><span>LLM-as-judge</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/semiconductor-rag" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj">
-          <figure><img src="assets/img/leaderboard.png" alt="Hallucination and factual accuracy by model" loading="lazy"></figure>
-          <div class="body">
-            <div class="area"><span lang="en">LLM evaluation · Korean</span><span lang="ko">LLM 평가 · 한국어</span></div>
-            <h3><span lang="en">Korean LLM Hallucination Benchmark</span><span lang="ko">한국어 LLM 환각 벤치마크</span></h3>
-            <div class="metric"><span><span lang="en">57–93% hallucination</span><span lang="ko">환각률 57~93%</span></span><span><span lang="en">−17.5 pts with 1 line</span><span lang="ko">지시 1줄로 −17.5%p</span></span></div>
-            <p><span lang="en">70 hand-written Korean questions, including false premises like non-existent law articles, across 4 models including LG's EXAONE. Also caught and fixed a faulty LLM judge.</span><span lang="ko">존재하지 않는 법 조항 등 거짓 전제를 포함한 한국어 70문항을 직접 만들어 LG EXAONE 등 4개 모델을 평가했습니다. 잘못 작동하는 LLM 평가자도 발견해 수정했습니다.</span></p>
-            <div class="tags"><span>EXAONE</span><span>evaluation</span><span>Korean NLP</span></div>
-            <a class="go" href="https://github.com/abdulkarimali0001/korean-hallucination-benchmark" target="_blank" rel="noopener"><span lang="en">View code →</span><span lang="ko">코드 보기 →</span></a>
-          </div>
-        </article>
-
-        <article class="proj pending">
-          <div class="body">
-            <div class="area"><span lang="en">Research · In progress</span><span lang="ko">연구 · 진행 중</span></div>
-            <h3><span lang="en">Legal Claim LLM Verification (Thesis)</span><span lang="ko">LLM 법률 주장 검증 (졸업논문)</span></h3>
-            <p><span lang="en">A Python tool that checks legal claims generated by LLMs against sources and flags unsupported or fabricated content. Results and code will be published when the thesis is complete.</span><span lang="ko">LLM이 생성한 법률 주장을 출처와 대조해 근거 없거나 지어낸 내용을 탐지하는 Python 도구입니다. 논문 완성 후 결과와 코드를 공개할 예정입니다.</span></p>
-            <div class="tags"><span>Python</span><span>legal NLP</span><span>hallucination detection</span></div>
-          </div>
-        </article>
+    <h2><span lang="en">CV</span><span lang="ko">이력서</span></h2>
+    <div class="cv">
+      <p><span lang="en">A two-page summary of my education, projects and skills.</span><span lang="ko">학력, 프로젝트, 기술을 정리한 2쪽 이력서입니다.</span></p>
+      <div class="dl">
+        <a href="assets/CV_Khamis_Abdulkarim_Ali_EN.pdf">English (PDF)</a>
+        <a href="assets/CV_Khamis_Abdulkarim_Ali_KO.pdf">한국어 (PDF)</a>
       </div>
-    </section>
+    </div>
+  </main>
 
-    <!-- SKILLS -->
-    <section class="block" id="skills">
-      <div class="sec-head"><span class="num">02</span><h2><span lang="en">Skills</span><span lang="ko">보유 기술</span></h2></div>
-      <div class="grid2">
-        <div class="panel">
-          <h3><span lang="en">Technical</span><span lang="ko">기술</span></h3>
-          <div class="skill-row"><b><span lang="en">Programming</span><span lang="ko">프로그래밍</span></b><span>Python, SQL, C#</span></div>
-          <div class="skill-row"><b><span lang="en">ML / Data</span><span lang="ko">ML · 데이터</span></b><span>PyTorch, scikit-learn, XGBoost, pandas, NumPy, SHAP</span></div>
-          <div class="skill-row"><b>AI · LLM</b><span><span lang="en">RAG, multilingual embeddings, LLM evaluation, hallucination detection, Ollama</span><span lang="ko">RAG, 다국어 임베딩, LLM 평가, 환각 탐지, Ollama</span></span></div>
-          <div class="skill-row"><b><span lang="en">Deployment</span><span lang="ko">배포 · MLOps</span></b><span><span lang="en">ONNX Runtime, INT8 quantization, FastAPI, Docker, GitHub Actions, pytest</span><span lang="ko">ONNX Runtime, INT8 양자화, FastAPI, Docker, GitHub Actions, pytest</span></span></div>
-          <div class="skill-row"><b><span lang="en">Tools</span><span lang="ko">도구</span></b><span>Git, Jupyter, VS Code, Unity</span></div>
-        </div>
-        <div class="panel">
-          <h3><span lang="en">Domain</span><span lang="ko">도메인</span></h3>
-          <div class="skill-row"><b><span lang="en">Semiconductor</span><span lang="ko">반도체</span></b><span><span lang="en">wafer maps, defect patterns, yield, fab sensor data, process drift</span><span lang="ko">웨이퍼 맵, 불량 패턴, 수율, 공정 센서 데이터, 공정 드리프트</span></span></div>
-          <div class="skill-row"><b><span lang="en">AI hardware</span><span lang="ko">AI 하드웨어</span></b><span><span lang="en">memory bandwidth, KV cache, quantization trade-offs</span><span lang="ko">메모리 대역폭, KV 캐시, 양자화 트레이드오프</span></span></div>
-          <div class="skill-row"><b><span lang="en">Evaluation</span><span lang="ko">평가</span></b><span><span lang="en">time-based validation, leakage checks, judge validation, human review</span><span lang="ko">시간 순 검증, 데이터 누수 점검, 평가자 검증, 사람 검수</span></span></div>
-          <h3 style="margin-top:22px"><span lang="en">Languages</span><span lang="ko">어학</span></h3>
-          <div class="lang-bars">
-            <div><span lang="en">Swahili</span><span lang="ko">스와힐리어</span><span class="track"><span class="fill" style="width:100%;display:block"></span></span><small><span lang="en">Native</span><span lang="ko">모국어</span></small></div>
-            <div><span lang="en">English</span><span lang="ko">영어</span><span class="track"><span class="fill" style="width:92%;display:block"></span></span><small><span lang="en">Fluent</span><span lang="ko">유창</span></small></div>
-            <div><span lang="en">Korean</span><span lang="ko">한국어</span><span class="track"><span class="fill" style="width:60%;display:block"></span></span><small><span lang="en">Intermediate</span><span lang="ko">중급</span></small></div>
-            <div><span lang="en">Arabic</span><span lang="ko">아랍어</span><span class="track"><span class="fill" style="width:25%;display:block"></span></span><small><span lang="en">Beginner</span><span lang="ko">초급</span></small></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CV -->
-    <section class="block" id="cv">
-      <div class="sec-head"><span class="num">03</span><h2><span lang="en">Education &amp; CV</span><span lang="ko">학력 · 이력서</span></h2></div>
-      <div class="grid2">
-        <div class="panel">
-          <h3><span lang="en">Education</span><span lang="ko">학력</span></h3>
-          <ul class="timeline">
-            <li><span class="when">— 2027.08</span><span><b><span lang="en">B.S. Smart Computing</span><span lang="ko">스마트컴퓨팅학과 학사</span></b><br><span lang="en">Kyungdong University, South Korea · GPA 3.8 · expected Aug 2027</span><span lang="ko">경동대학교 · 학점 3.8 · 2027년 8월 졸업예정</span></span></li>
-            <li><span class="when">— 2022.04</span><span><b><span lang="en">KCSE Certificate (B+)</span><span lang="ko">KCSE 고교 졸업자격 (B+)</span></b><br><span lang="en">Kanga High School, Kenya</span><span lang="ko">캉가 고등학교, 케냐</span></span></li>
-          </ul>
-        </div>
-        <div class="panel">
-          <h3><span lang="en">Download my CV</span><span lang="ko">이력서 다운로드</span></h3>
-          <p style="margin:0 0 16px;color:var(--muted);font-size:15px"><span lang="en">Two-page CV with all projects, skills and education. Korean version follows the standard 이력서 format.</span><span lang="ko">모든 프로젝트·기술·학력을 담은 2쪽 이력서입니다. 한국어 버전은 표준 이력서 양식을 따릅니다.</span></p>
-          <div class="ctas">
-            <a class="btn primary" href="assets/CV_Khamis_Abdulkarim_Ali_EN.pdf" download>CV · English (PDF)</a>
-            <a class="btn" href="assets/CV_Khamis_Abdulkarim_Ali_KO.pdf" download>이력서 · 한국어 (PDF)</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="contact" id="contact">
-      <div>
-        <h2><span lang="en">Let's talk</span><span lang="ko">연락 주세요</span></h2>
-        <p><span lang="en">Open to internships and new-graduate roles in AI and data for semiconductor manufacturing, from 2027.</span><span lang="ko">2027년부터 반도체 제조 분야 AI·데이터 직무의 인턴십과 신입 채용에 지원하고 있습니다.</span></p>
-        <p style="font-family:var(--mono);font-size:14px;opacity:.95;user-select:all">abdulkarimali0001@gmail.com</p>
-      </div>
-      <div class="ctas">
-        <a class="btn primary" href="mailto:abdulkarimali0001@gmail.com"><span lang="en">Email me</span><span lang="ko">이메일 보내기</span></a>
-        <a class="btn" href="https://github.com/abdulkarimali0001" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </section>
-
-    <footer><span lang="en">© 2026 Khamis Abdulkarim Ali · All projects are open source on GitHub.</span><span lang="ko">© 2026 카미스 압둘카림 알리 · 모든 프로젝트는 GitHub에 공개되어 있습니다.</span></footer>
-  </div>
-</main>
+  <footer>
+    <span><span lang="en">I'm looking for internships and graduate roles from 2027. Feel free to email me.</span><span lang="ko">2027년부터 인턴십과 신입 채용 기회를 찾고 있습니다. 편하게 이메일 주세요.</span></span>
+    <a href="mailto:abdulkarimali0001@gmail.com">abdulkarimali0001@gmail.com</a>
+  </footer>
+</div>
 
 <script>
-// ---- language toggle (remembers the choice; Korean browsers start in Korean) ----
 (function () {
-  const root = document.documentElement;
-  let lang = "en";
-  try { lang = localStorage.getItem("lang") || (navigator.language || "").toLowerCase().startsWith("ko") && "ko" || "en"; } catch (e) {}
+  var root = document.documentElement, lang = "en";
+  try { lang = localStorage.getItem("lang") || ((navigator.language || "").toLowerCase().indexOf("ko") === 0 ? "ko" : "en"); } catch (e) {}
   function set(l) {
-    root.dataset.lang = l; root.lang = l;
-    document.querySelectorAll(".toggle button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === l)));
+    root.setAttribute("data-lang", l); root.lang = l;
+    document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === l)); });
     try { localStorage.setItem("lang", l); } catch (e) {}
   }
-  document.querySelectorAll(".toggle button").forEach(b => b.addEventListener("click", () => set(b.dataset.set)));
+  document.querySelectorAll(".lang button").forEach(function (b) { b.addEventListener("click", function () { set(b.dataset.set); }); });
   set(lang);
-})();
-
-// ---- hero: a real MixedWM38 test wafer (0 = no die, 1 = pass, 2 = fail), drawn die by die ----
-(function () {
-  const MAP = "0000000000000000000000000000000000000000000000000000000000000000000000000222222222220000000000000000000000000000000000000022222221222222222000000000000000000000000000000002222221111111111222222200000000000000000000000000022222212111111111111112122200000000000000000000000022111112111111111111112112222000000000000000000000022221211111122111121111111122220000000000000000000122211121111121111211121211121121220000000000000000222111121121111111211111112111111122100000000000000222111121221111111111111112121211212122000000000000022112212111111222111121111111111212112200000000000022111111112111111221111111221112111111122000000000022211112211111111112111121121121211111112220000000022211111111211111121221112111211211121121122200000002211111112111111122222212121111211121121212220000002221111212121122112122222211111111111111211112200000121112111112112222222222211212212122111111112220000021221111111112122222222221221211111121111211122000021111212111122222222222222222221111111211111212220002211111112112222222222122222221121112111111211122000221111111111212222221111122222211211111111111112200122111111111211222222111111222222211121112111221222022111112111111222222111111112222221111111121111112202212121111221112222111111111222221111122121121121220221111111121221222211111111122222212121112121121122021112211211122222221111111112222111211111111111112202212111121111122222221111122222222111112112111112220222112212212211222222111112222212121121121111111222022112121111211222122222222222222121211111211111122202212212111112112222222222222222112211111112111111220222211121111211112222222222222121211212111122111222022212121111111111221222222222221111111111121111122200222111112111111112222222222112111111221121211112200022211222111212112112122222111212111111112211112220002212111112111111212111211211211122112111111111122000022211111111221111111111112111112111122111122122000002222121111111111211211111112112211111121112212200000222111111112111111112211112111122122111111122220000002211111111112121112211111221122211211111111222000000222211111111112211111111111121111111111122222000000002222111111121211111111111211111112112222222000000000022211111111111111211111212111121122221122000000000000221112111111211211211222111122222111122000000000000022222111111111211111112211112222111122200000000000000222222211121112111111111122221111122200000000000000001222111121111111121211222121112222200000000000000000002221111221111111111221111121222000000000000000000000022211211121111122221212112222000000000000000000000000212221111111112211111122221000000000000000000000000000222222211112211122222220000000000000000000000000000000022222222212222222000000000000000000000000000000000000002222221222200000000000000000000";
-  const N = 52, cv = document.getElementById("wafer"), ctx = cv.getContext("2d");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function draw(upto) {
-    const css = getComputedStyle(document.documentElement);
-    const pass = css.getPropertyValue("--pass").trim(), fail = css.getPropertyValue("--fail").trim();
-    const s = cv.width / N, gap = Math.max(1, s * 0.14);
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    for (let i = 0; i < Math.min(upto, N * N); i++) {
-      const v = MAP.charCodeAt(i) - 48;
-      if (v === 0) continue;
-      ctx.fillStyle = v === 2 ? fail : pass;
-      ctx.fillRect((i % N) * s + gap / 2, Math.floor(i / N) * s + gap / 2, s - gap, s - gap);
-    }
-  }
-  if (reduce) { draw(N * N); }
-  else { let k = 0; (function step() { k += 52 * 2; draw(k); if (k < N * N) requestAnimationFrame(step); })(); }
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw(N * N));
 })();
 </script>
 </body>
